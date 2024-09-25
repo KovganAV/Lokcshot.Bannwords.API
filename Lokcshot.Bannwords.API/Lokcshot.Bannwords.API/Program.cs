@@ -4,12 +4,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Discord.AppSettings.Api.Core.Interfaces;
-using Discord.AppSettings.Api.Core.Services;
-using Discord.AppSettings.Api.Data.Repositories;
-using Discord.AppSettings.Api.Data.DataBaseContext;
-using Discord.AppSettings.Api.Core.Service;
-using Discord.AppSettings.Api.Data.Entities;
+using Lokcshot.Bannwords.API.Core.Interfaces;
+using Lokcshot.Bannwords.API.Core.Service;
+using Lokcshot.Bannwords.Data.Repositories;
+using Lokcshot.Bannwords.Data.DataBaseContext;
+using Lokcshot.Bannwords.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lokcshot.Bannwords.Data.Entities
 {
-    internal class CountryEntity
+    public class CountryEntity
     {
         public string Name { get; set; }
 

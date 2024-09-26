@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Lokcshot.Bannwords.Models.Banwords.Requests;
 using Lokcshot.Bannwords.Models.Banwords.Responses;
+using Lokcshot.Bannwords.Models.Countries.Responses;
 using Lokcshot.Bannwords.API.Core.Interfaces;
 using Lokcshot.Bannwords.Data.Entities;
 using Lokcshot.Bannwords.Data.Repositories;
+using Lokcshot.Bannwords.Data.DataBaseContext;
+using Lokcshot.Bannwords.Data.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,103 +15,23 @@ using System.Threading.Tasks;
 
 namespace Lokcshot.Bannwords.API.Core.Service
 {
-    public class CountryBannedWordsService : ICountryBannedWordsService
+    public class CountryServise : ICountryService
     {
 
-        private readonly CountryBannedWordsRepository _bannedWordsRepository;
         private readonly IMapper _mapper;
+        private readonly BaseRepository<CountryEntity> _countryRepository;
 
-        public CountryBannedWordsService(CountryBannedWordsRepository bannedWordsRepository, IMapper mapper)
+        public CountryServise(BaseRepository<CountryEntity> repository, IMapper mapper)
         {
-            _bannedWordsRepository = bannedWordsRepository;
+            _countryRepository = repository;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<CountryBannedWordsEntity>> GetAllAsync()
+        public async Task<IEnumerable<CountryGetModel>> GetAllCountriesAsync()
         {
-
-            return await _bannedWordsRepository.GetAllAsync();
+            var countryEntities = await _countryRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CountryEntity>, IEnumerable<CountryGetModel>>(countryEntities);
         }
 
-        public async Task<IEnumerable<BanwordGetModel>> GetByCountryIdAsync(Guid countryId)
-        {
-
-            var currentEntity = await _bannedWordsRepository.GetByCountryIdAsync(countryId);
-
-            if (currentEntity == null)
-            {
-                return null;
-            }
-
-            var currentList = currentEntity.BannedWords;
-            List<BanwordGetModel> banwordGetModels = new List<BanwordGetModel>();
-
-            for (var i = 0; i < currentList.Count(); i++)
-            {
-                banwordGetModels.Add(new BanwordGetModel { Content = currentList[i] });
-            }
-
-            return banwordGetModels;
-
-        }
-
-        public async Task<bool> AddAsync(Lokcshot.Bannwords.Models.Banwords.Requests.BanwordRequestModel countryBannedWords, Guid countryId)
-        {
-
-            var current = _bannedWordsRepository.GetByCountryIdAsync(countryId).Result;
-
-            if (current == null)
-            {
-                current = new CountryBannedWordsEntity();
-                current.CountryId = countryId;
-                await _bannedWordsRepository.AddAsync(current);
-            }
-
-            if (_bannedWordsRepository.FindWordAsync(current, countryBannedWords.Content).Result == true)
-            {
-                return false;
-            }
-
-            await _bannedWordsRepository.AddOneWordAsync(current, countryBannedWords.Content);
-
-            return true;
-        }
-
-        public async Task<bool> UpdateAsync(BanwordRequestPutModel newWord, Guid countryId)
-        {
-
-            var current = await _bannedWordsRepository.GetByCountryIdAsync(countryId);
-
-            if (current == null)
-            {
-                return false;
-            }
-
-            if (_bannedWordsRepository.FindWordAsync(current, newWord.Content).Result == true)
-            {
-                return false;
-            }
-
-            await _bannedWordsRepository.UpdateOneWodsAsync(current, newWord);
-
-            return true;
-
-        }
-
-        public async Task<bool> DeleteAsync(BanwordRequestModel banword, Guid countryId)
-        {
-
-            var current = await _bannedWordsRepository.GetByCountryIdAsync(countryId);
-
-            if (current == null)
-            {
-                return false;
-            }
-
-            await _bannedWordsRepository.DeleteOneWordAsync(current, banword.Content);
-
-            return true;
-
-        }
     }
 }

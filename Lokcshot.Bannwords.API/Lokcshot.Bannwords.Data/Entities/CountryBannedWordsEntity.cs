@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lokcshot.Bannwords.Data.Entities
 {
-    internal class CountryBannedWordsEntity
+    public class CountryBannedWordsEntity
     {
         public List<string>? BannedWords { get; set; } = new List<string>();
         public Guid CountryId { get; set; }

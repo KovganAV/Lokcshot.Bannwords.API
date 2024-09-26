@@ -6,7 +6,6 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using Lokcshot.Bannwords.Data;
-using Lokcshot.Bannwords.Data.DataBaseContext.Configurations;
 using Lokcshot.Bannwords.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

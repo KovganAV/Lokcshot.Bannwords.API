@@ -1,6 +1,4 @@
-﻿using Lokcshot.Bannwords.Models.Banwords.Requests;
-using Lokcshot.Bannwords.Models.Banwords.Responses;
-using Lokcshot.Bannwords.Data.Entities;
+﻿using Lokcshot.Bannwords.Models.Countries.Responses;
 
 namespace Lokcshot.Bannwords.API.Core.Interfaces
 {

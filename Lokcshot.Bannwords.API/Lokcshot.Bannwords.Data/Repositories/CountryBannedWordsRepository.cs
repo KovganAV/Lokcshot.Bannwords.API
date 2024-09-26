@@ -1,5 +1,6 @@
 ﻿using Lokcshot.Bannwords.Data.DataBaseContext;
 using Lokcshot.Bannwords.Data.Entities;
+using Lokcshot.Bannwords.Data.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

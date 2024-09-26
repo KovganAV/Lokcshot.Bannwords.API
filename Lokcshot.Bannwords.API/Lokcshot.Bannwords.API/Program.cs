@@ -46,7 +46,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-app.UseCors("ClientWebApi");
+app.UseCors("BannwordsApi");
 
 app.UseRouting();
 
